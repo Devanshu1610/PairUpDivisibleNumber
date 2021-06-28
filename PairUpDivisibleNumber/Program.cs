@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 namespace PairUpDivisibleNumber
@@ -19,20 +19,27 @@ namespace PairUpDivisibleNumber
          
             List<Pair> PairList = new List<Pair>();
 
-         
-            for (int i = 0; i < arraysToCheck.GetLength(1); i++)
+            try
             {
-                          
-                    if (arraysToCheck[0, i] % number == 0&& arraysToCheck[1, i] % number==0)
+                for (int i = 0; i < arraysToCheck.GetLength(1); i++)
+                {
+
+                    if (arraysToCheck[0, i] % number == 0 && arraysToCheck[1, i] % number == 0)
                     {
-                          PairList.Add(new Pair()
+                        PairList.Add(new Pair()
                         {
-                           firstArrayElement= arraysToCheck[0, i],secondArrayElement= arraysToCheck[1, i]
+                            firstArrayElement = arraysToCheck[0, i],
+                            secondArrayElement = arraysToCheck[1, i]
 
                         });
                     }
-                
-                
+
+
+                }
+            }
+            catch (IndexOutOfRangeException io)
+            {
+                throw new IndexOutOfRangeException("Error occured in processing!! " + io.Message);
             }
 
             return PairList;
@@ -50,7 +57,17 @@ namespace PairUpDivisibleNumber
             Console.WriteLine("Hello World!");
 
             int[,] arrays = new int[2,5] { { 10, 20, 30, 40, 50 }, { 12, 24, 40, 90, 200 } };
-         var resultPairArr =   DivisblePairArray.CreateDivisblePairArray(arrays,10);
+            List<Pair> resultPairArr = new List<Pair>();
+            try
+            {
+               resultPairArr = DivisblePairArray.CreateDivisblePairArray(arrays, 10);
+                Console.WriteLine("Processing Successful!!");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine("Processing failed!!" + ex.Message);
+            }
+
             Pair maxPair = new Pair();
             int maxPairSum = 0;
             if (resultPairArr.Count > 0)
